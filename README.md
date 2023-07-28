@@ -168,5 +168,5 @@ You can now subscribe to the decntralized podcast using apps like Apple Podcast.
 
 ## Further Development
 
-Ideally, the user would not need to worry about running their own version of IPFS Desktop, or uploading episode files in any particular file structure. A no-code tool for building decentralized websites on IPFS and ENS names could be made to do all this for you. 
+Ideally, the user would not need to worry about running their own version of IPFS Desktop, or uploading episode files in any particular file structure to IPFS. A no-code tool for building decentralized podcasts on IPFS and ENS names could be made to do all this for you.
 
