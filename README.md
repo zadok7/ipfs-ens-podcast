@@ -6,6 +6,8 @@ To follow this guide, you will need an ENS name to point to your IPFS content. I
 
 The guide assumes you are using a directory structure for organizing your podcast files. The podcast player reads the metadata from the podcast files stored in the IPFS network, and uses this data to populate the player with episodes. The podcast files and directories follow a specific naming and structural convention to enable the player to automatically update the podcast content just by adding new files to IPFS.
 
+(Note: If your ENS name points to an IPNS location, you do not need to change the meta tags each time you update your content. However, if you are not using an ENS name with the [limo resolver](https://eth.limo), you will need to update the `directoryHash` each time you add new content to the `podcast_content` folder as the IPFS hash of this directory will change.)
+
 ## Directory Structure
 
 - **/mypodcast** - The root directory of the podcast.
@@ -57,9 +59,9 @@ Meta variables serve as pointers that help locate your content in the IPFS netwo
 Here's a breakdown of what each variable does and how to update them:
 
 - `ipfsGateway`: This sets the URL of your IPFS gateway. If an ENS name is not provided, this gateway will be used to retrieve the content. 
-- `directoryHash`: This should be the IPFS CID hash of the `/podcast_content` directory. If an ENS name is not provided, this hash will be used to locate the content.
-- `feedHash`: This should be the IPFS hash of your podcast feed. If a feed name is not provided, this hash will be used to retrieve the feed.
-- `ensName`: If you provide an ENS name here, it will be used to retrieve the content instead of the IPFS gateway and directory hash. Make sure your ENS name resolves correctly to your IPFS content.
+- `directoryHash`: This should be the IPFS CID hash of the `/podcast_content` directory. If `ensName` is not provided below, this hash will be used to locate the content. Note that each time new content is added to the `podcast_content` folder, the IPFS hash for the directory will change, and this meta tag will need to be updated if you are not using an ENS name.
+- `feedHash`: This should be the IPFS hash of your podcast feed. If `feedName` is not provided below, this hash will be used to retrieve the feed.
+- `ensName`: If you provide an ENS name here, it will be used to retrieve the content instead of the IPFS gateway and directory hash. Make sure your ENS name resolves correctly to your IPFS content. If your ENS name `contenthash` record points to an IPFS using IPNS then you won't need to update the `contenthash` each time. 
 - `feedName`: If you provide an ENS name for the feed, it will be used to retrieve the feed instead of the IPFS gateway and feed hash. 
 
 Update these variables with your specific content information to ensure your podcast can be found and accessed correctly.
@@ -69,6 +71,8 @@ Update these variables with your specific content information to ensure your pod
 <meta name="ipfsGateway" content="https://ipfs.io">
 <meta name="directoryHash" content="QmXrBdvJ9Rbd4jUkL1XpMHvuiTfEGXjwNNSTaNzgpjfvds">
 <meta name="feedHash" content="QmaR1NKFxqP3kN9SSKdbVj3p8revjh3qDAQLw9dvfGwqdA">
+<meta name="ensName" content="podcast.showmehow.eth">
+<meta name="feedName" content="feed.podcast.showmehow.eth">
 <meta name="ensName" content="podcast.showmehow.eth">
 <meta name="feedName" content="feed.podcast.showmehow.eth">
 
