@@ -72,5 +72,101 @@ Update these variables with your specific content information to ensure your pod
     <meta name="feedHash" content="QmaR1NKFxqP3kN9SSKdbVj3p8revjh3qDAQLw9dvfGwqdA"> <!-- Sets the IPFS feed hash. If 'feedName' is not provided, this will be used to retrieve the feed -->
     <meta name="ensName" content="podcast.showmehow.eth"> <!-- If set, this ENS name will be used instead of 'ipfsGateway' and 'directoryHash' to retrieve the content -->
     <meta name="feedName" content="feed.podcast.showmehow.eth"> <!-- If set, this ENS name will be used instead of 'ipfsGateway' and 'feedHash' to retrieve the feed -->
+```
 
+## How to Use the /generator/index.html
+
+### Using an ENS Name
+
+1. Open the /generator/index.html file in your web browser.
+2. Input your ENS name into the "Podcast ENS Name" field.
+3. Click the "Download RSS" button to download your Podcast RSS file.
+4. Upload podcast.rss to IPFS and point the `contenthash` record of the ENS subname ie. feed.podcast.showmehow.eth to this IPFS hash. If you use IPNS you won't need to update your ENS subname's record each time.
+
+Here's an example of the generated `podcast.rss` file using an ENS name and the `.limo` resolver.
+
+```markdown
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd">
+    <channel>
+        <title>The SMH Podcast</title>
+        <link>https://podcast.showmehow.eth.limo</link>
+        <language>en</language>
+        <itunes:author>zadok7.eth</itunes:author>
+        <description>The SMH podcast is a demo podcast built on IPFS. We have many great episodes and more coming so be sure to subscribe. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</description>
+        <itunes:image href="https://podcast.showmehow.eth.limo/podcast_content/podcast.png" />
+        <item>
+            <title>Episode three title</title>
+            <description>This is a description for episode 3.</description>
+            <enclosure url="https://podcast.showmehow.eth.limo/podcast_content/episodes/episode3.mp3" length="0" type="audio/mpeg"/>
+            <itunes:image href="https://podcast.showmehow.eth.limo/podcast_content/episode_images/episode3.png" />
+            <pubDate>Mon, 19 Jun 2023 00:00:00 GMT</pubDate>
+        </item>
+        <item>
+            <title>Episode two title</title>
+            <description>This is a description for episode 2.</description>
+            <enclosure url="https://podcast.showmehow.eth.limo/podcast_content/episodes/episode2.mp3" length="0" type="audio/mpeg"/>
+            <itunes:image href="https://podcast.showmehow.eth.limo/podcast_content/episode_images/episode2.png" />
+            <pubDate>Fri, 19 May 2023 00:00:00 GMT</pubDate>
+        </item>
+        <item>
+            <title>Episode one title</title>
+            <description>This is a description for episode 1.</description>
+            <enclosure url="https://podcast.showmehow.eth.limo/podcast_content/episodes/episode1.mp3" length="0" type="audio/mpeg"/>
+            <itunes:image href="https://podcast.showmehow.eth.limo/podcast_content/episode_images/episode1.png" />
+            <pubDate>Wed, 19 Apr 2023 00:00:00 GMT</pubDate>
+        </item>
+    </channel>
+</rss>
+```
+
+### Using an IPFS Public Gateway
+
+1. Open the /generator/index.html file in your web browser.
+2. Click the "Use IPFS instead" link under the "Podcast ENS Name" field.
+3. Input your IPFS gateway into the "IPFS Gateway" field that appears.
+4. Input your directory hash into the "Directory Hash" field. (this is the IPFS hash of `/podcast_content`. Remember when you add new episodes this hash changes.)
+5. Click the "Download RSS" button to download your Podcast RSS file.
+
+When using your own IPFS public gateway, all generated links will point to your gateway instead of the default .limo resolver.
+
+```markdown
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd">
+    <channel>
+        <title>The SMH Podcast</title>
+        <link>https://ipfs.io/ipfs/QmXrBdvJ9Rbd4jUkL1XpMHvuiTfEGXjwNNSTaNzgpjfvds</link>
+        <language>en</language>
+        <itunes:author>zadok7.eth</itunes:author>
+        <description>The SMH podcast is a demo podcast built on IPFS. We have many great episodes and more coming so be sure to subscribe. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</description>
+        <itunes:image href="https://ipfs.io/ipfs/QmXrBdvJ9Rbd4jUkL1XpMHvuiTfEGXjwNNSTaNzgpjfvds/podcast_content/podcast.png" />
+        <item>
+            <title>Episode three title</title>
+            <description>This is a description for episode 3.</description>
+            <enclosure url="https://ipfs.io/ipfs/QmXrBdvJ9Rbd4jUkL1XpMHvuiTfEGXjwNNSTaNzgpjfvds/podcast_content/episodes/episode3.mp3" length="0" type="audio/mpeg"/>
+            <itunes:image href="https://ipfs.io/ipfs/QmXrBdvJ9Rbd4jUkL1XpMHvuiTfEGXjwNNSTaNzgpjfvds/podcast_content/episode_images/episode3.png" />
+            <pubDate>Mon, 19 Jun 2023 00:00:00 GMT</pubDate>
+        </item>
+        <item>
+            <title>Episode two title</title>
+            <description>This is a description for episode 2.</description>
+            <enclosure url="https://ipfs.io/ipfs/QmXrBdvJ9Rbd4jUkL1XpMHvuiTfEGXjwNNSTaNzgpjfvds/podcast_content/episodes/episode2.mp3" length="0" type="audio/mpeg"/>
+            <itunes:image href="https://ipfs.io/ipfs/QmXrBdvJ9Rbd4jUkL1XpMHvuiTfEGXjwNNSTaNzgpjfvds/podcast_content/episode_images/episode2.png" />
+            <pubDate>Fri, 19 May 2023 00:00:00 GMT</pubDate>
+        </item>
+        <item>
+            <title>Episode one title</title>
+            <description>This is a description for episode 1.</description>
+            <enclosure url="https://ipfs.io/ipfs/QmXrBdvJ9Rbd4jUkL1XpMHvuiTfEGXjwNNSTaNzgpjfvds/podcast_content/episodes/episode1.mp3" length="0" type="audio/mpeg"/>
+            <itunes:image href="https://ipfs.io/ipfs/QmXrBdvJ9Rbd4jUkL1XpMHvuiTfEGXjwNNSTaNzgpjfvds/podcast_content/episode_images/episode1.png" />
+            <pubDate>Wed, 19 Apr 2023 00:00:00 GMT</pubDate>
+        </item>
+    </channel>
+</rss>
+```
+You can now subscribe to the decntralized podcast using apps like Apple Podcast.
+
+## Further Development
+
+Ideally, the user would not need to worry about running their own version of IPFS Desktop, or uploading episode files in any particular file structure. A no-code tool for building decentralized websites on IPFS and ENS names could be made to do all this for you. 
 
