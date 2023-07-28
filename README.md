@@ -10,6 +10,14 @@ The guide assumes you are using a directory structure for organizing your podcas
 
 For a Primary on creating decentralized websites with IPFS and ENS names, see [ENS Support Docs: Create a Decentralized Website](https://support.ens.domains/articles/7890637-create-a-decentralized-website)
 
+## Demo of Decentralized Podcast Built on IPFS with an ENS name.
+
+Podcast Web Player - [podcast.showmehow.eth](https://podcast.showmehow.eth.limo)
+
+Podcast Subscription RSS Feed (you can add this to Apple Podcast to subscribe) - [feed.podcast.showmehow.eth](https://feed.podcast.showmehow.eth.limo)
+
+For other experiments and blog posts about ENS and the blockchain see: [showmehow.eth](https://showmehow.eth.limo)
+
 ## Directory Structure
 
 - **/mypodcast** - The root directory of the podcast.
