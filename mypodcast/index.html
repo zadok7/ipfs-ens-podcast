@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>My Podcast</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="ipfsGateway" content="https://ipfs.io">
+    <meta name="directoryHash" content="QmXrBdvJ9Rbd4jUkL1XpMHvuiTfEGXjwNNSTaNzgpjfvds">
+    <meta name="feedHash" content="QmaR1NKFxqP3kN9SSKdbVj3p8revjh3qDAQLw9dvfGwqdA">
+    <meta name="ensName" content="podcast.showmehow.eth">
+    <meta name="feedName" content="feed.podcast.showmehow.eth">
+
+    <script>
+        window.addEventListener('DOMContentLoaded', (event) => {
+            const ipfsGateway = document.querySelector('meta[name="ipfsGateway"]').content;
+            const directoryHash = document.querySelector('meta[name="directoryHash"]').content;
+            const ensName = document.querySelector('meta[name="ensName"]').content;
+            const feedHash = document.querySelector('meta[name="feedHash"]').content;
+            const feedName = document.querySelector('meta[name="feedName"]').content;
+            const rssButton = document.querySelector('#subscribe button');
+            const globalPlayer = document.getElementById('global-player');
+
+            const head = document.head;
+            const link = document.createElement('link');
+
+            link.type = 'text/css';
+            link.rel = 'stylesheet';
+
+            if (ensName) {
+                link.href = `https://${ensName}.limo/style.css`;
+            } else {
+                link.href = `${ipfsGateway}/ipfs/${directoryHash}/style.css`;
+            }
+
+            head.appendChild(link);
+
+            function normalizeURL(href) {
+                href = href.split('?')[0];
+
+                const ipnsRegex = /\/ipns\/[a-z0-9-]+/i;
+
+                if (ensName) {
+                    href = href.replace(ipnsRegex, '');
+                    return `https://${ensName}.limo${href}`;
+                } else {
+                    if (href.includes("/ipfs/")) {
+                        return `${ipfsGateway}${href}`;
+                    }
+
+                    return `${ipfsGateway}/ipfs/${directoryHash}${href}`;
+                }
+            }
+
+            function getFeedURL() {
+                if (feedName) {
+                    return `https://${feedName}.limo`;
+                } else {
+                    return `${ipfsGateway}/ipfs/${feedHash}`;
+                }
+            }
+
+            function extractEpisodeNumber(href) {
+                const filename = href.split('/').pop();
+                const episodeNum = filename.match(/\d+/)[0];
+                return Number(episodeNum);
+            }
+
+            function parsePodcastData(podcastData) {
+                const lines = podcastData.split('\n');
+                let title = "";
+                let description = "";
+                for (let line of lines) {
+                    const splitLine = line.split(": ");
+                    if (splitLine[0] === "title") {
+                        title = splitLine[1];
+                    } else if (splitLine[0] === "description") {
+                        description = splitLine[1];
+                    }
+                }
+                return { title, description };
+            }
+
+            fetch(ensName ? `https://${ensName}.limo/podcast_content/podcast.txt` : `${ipfsGateway}/ipfs/${directoryHash}/podcast.txt`)
+                .then(response => response.text())
+                .then(podcastData => {
+                    const { title, description } = parsePodcastData(podcastData);
+                    const podcastSection = document.getElementById('podcast');
+
+                    const podcastInfoDiv = document.createElement('div');
+                    podcastInfoDiv.id = 'podcast-info';
+
+                    const podcastImage = document.createElement('img');
+                    podcastImage.src = ensName ? `https://${ensName}.limo/podcast_content/podcast.png` : `${ipfsGateway}/ipfs/${directoryHash}/podcast.png`;
+                    podcastImage.style.width = "200px";
+
+                    const textContainerDiv = document.createElement('div');
+                    textContainerDiv.className = 'text-container';
+
+                    const podcastTitle = document.createElement('h2');
+                    podcastTitle.innerText = title;
+
+                    const podcastDescription = document.createElement('p');
+                    podcastDescription.innerText = description;
+
+                    textContainerDiv.appendChild(podcastTitle);
+                    textContainerDiv.appendChild(podcastDescription);
+
+                    const subscribeDiv = document.getElementById('subscribe');
+
+                    podcastInfoDiv.appendChild(podcastImage);
+                    podcastInfoDiv.appendChild(textContainerDiv);
+                    podcastInfoDiv.appendChild(subscribeDiv);
+
+                    podcastSection.appendChild(podcastInfoDiv);
+                })
+                .then(() => {
+                    fetch(ensName ? `https://${ensName}.limo/podcast_content` : `${ipfsGateway}/ipfs/${directoryHash}`)
+                        .then(response => response.text())
+                        .then(directoryData => {
+                            let parser = new DOMParser();
+                            let directoryDoc = parser.parseFromString(directoryData, 'text/html');
+                            let directoryLinks = Array.from(directoryDoc.querySelectorAll('a'));
+
+                            let episodesDirHash = directoryLinks.find(a => a.textContent.includes('episodes')).href.split('/').pop();
+                            let imagesDirHash = directoryLinks.find(a => a.textContent.includes('episode_images')).href.split('/').pop();
+                            let descriptionsDirHash = directoryLinks.find(a => a.textContent.includes('episode_descriptions')).href.split('/').pop();
+
+                            Promise.all([
+                                fetch(ensName ? `https://${ensName}.limo/podcast_content/episodes` : `${ipfsGateway}/ipfs/${directoryHash}/episodes`),
+                                fetch(ensName ? `https://${ensName}.limo/podcast_content/episode_images` : `${ipfsGateway}/ipfs/${directoryHash}/episode_images`),
+                                fetch(ensName ? `https://${ensName}.limo/podcast_content/episode_descriptions` : `${ipfsGateway}/ipfs/${directoryHash}/episode_descriptions`)
+                            ])
+                                .then(([episodesResponse, imagesResponse, descriptionsResponse]) => Promise.all([episodesResponse.text(), imagesResponse.text(), descriptionsResponse.text()]))
+                                .then(([episodesData, imagesData, descriptionsData]) => {
+                                    let episodesDoc = parser.parseFromString(episodesData, 'text/html');
+                                    let imagesDoc = parser.parseFromString(imagesData, 'text/html');
+                                    let descriptionsDoc = parser.parseFromString(descriptionsData, 'text/html');
+
+                                    let episodeLinks = Array.from(episodesDoc.querySelectorAll('a'));
+                                    let imageLinks = Array.from(imagesDoc.querySelectorAll('a'));
+                                    let descriptionLinks = Array.from(descriptionsDoc.querySelectorAll('a'));
+
+                                    episodeLinks = episodeLinks
+                                        .map(a => normalizeURL(a.getAttribute('href')))
+                                        .filter(href => href.endsWith('.mp3'));
+
+                                    imageLinks = imageLinks
+                                        .map(a => normalizeURL(a.getAttribute('href')))
+                                        .filter(href => href.endsWith('.png'));
+
+                                    descriptionLinks = descriptionLinks
+                                        .map(a => normalizeURL(a.getAttribute('href')))
+                                        .filter(href => href.endsWith('.txt'));
+
+                                    Promise.all(descriptionLinks.map(link => fetch(link)))
+                                        .then(responses => Promise.all(responses.map(res => res.text())))
+                                        .then(descriptions => {
+                                            descriptions = descriptions.map(descriptionData => {
+                                                const descriptionLines = descriptionData.split('\n');
+                                                let titleText = "";
+                                                let descriptionText = "";
+                                                let dateText = "";
+                                                for (let line of descriptionLines) {
+                                                    const splitLine = line.split(": ");
+                                                    if (splitLine[0] === "title") {
+                                                        titleText = splitLine[1];
+                                                    } else if (splitLine[0] === "description") {
+                                                        descriptionText = splitLine[1];
+                                                    } else if (splitLine[0] === "date") {
+                                                        dateText = splitLine[1];
+                                                    }
+                                                }
+                                                return { titleText, descriptionText, dateText };
+                                            });
+
+                                            const episodes = episodeLinks.map((episodeLink, i) => {
+                                                return {
+                                                    title: descriptions[i].titleText,
+                                                    description: descriptions[i].descriptionText,
+                                                    date: descriptions[i].dateText,
+                                                    episodeLink: episodeLink,
+                                                    imageLink: imageLinks[i]
+                                                };
+                                            });
+
+                                            episodes.sort((a, b) => extractEpisodeNumber(b.episodeLink) - extractEpisodeNumber(a.episodeLink));
+
+                                            const playerSection = document.getElementById('player');
+                                            episodes.forEach(episode => {
+                                                let episodeDiv = document.createElement('div');
+                                                episodeDiv.className = 'episode';
+
+                                                let episodeContainer = document.createElement('div');
+                                                episodeContainer.id = 'episode-container';
+
+                                                let imageContainer = document.createElement('div');
+                                                imageContainer.className = 'episode-image-container';
+
+                                                let textContainer = document.createElement('div');
+                                                textContainer.className = 'episode-text-container';
+
+                                                if (episode.imageLink) {
+                                                    let image = document.createElement('img');
+                                                    image.src = episode.imageLink;
+                                                    image.className = 'episode-image';
+                                                    image.addEventListener('click', function () {
+                                                        globalPlayer.src = episode.episodeLink;
+                                                        globalPlayer.play();
+                                                    });
+                                                    imageContainer.appendChild(image);
+                                                }
+
+                                                let title = document.createElement('h2');
+                                                title.className = 'episode-title';
+                                                title.innerText = episode.title;
+
+                                                let date = document.createElement('p');
+                                                date.className = 'episode-date';
+                                                date.innerText = episode.date;
+
+                                                let description = document.createElement('p');
+                                                description.className = 'episode-description';
+                                                description.innerText = episode.description;
+
+                                                textContainer.appendChild(title);
+                                                textContainer.appendChild(date);
+                                                textContainer.appendChild(description);
+
+                                                episodeContainer.appendChild(imageContainer);
+                                                episodeContainer.appendChild(textContainer);
+
+                                                episodeDiv.appendChild(episodeContainer);
+
+                                                playerSection.appendChild(episodeDiv);
+                                            });
+                                        });
+                                });
+                        });
+                });
+
+            rssButton.addEventListener('click', function (event) {
+                event.preventDefault();
+                navigator.clipboard.writeText(getFeedURL()).then(function () {
+                    alert("Copied the URL to clipboard");
+                }, function (err) {
+                    alert("Failed to copy URL: " + err);
+                });
+            });
+
+        });
+    </script>
+
+</head>
+
+<body>
+    <header>
+        <h1>Welcome to My Podcast!</h1>
+        <audio id="global-player" controls></audio>
+    </header>
+
+    <main>
+        <section id="podcast">
+            <!-- Podcast title, image, and description will be inserted here -->
+        </section>
+        <section id="player">
+            <div class="section-header">
+                <h2>Latest Episodes</h2>
+                <div id="subscribe">
+                    <button>Subscribe</button>
+                </div>
+            </div>
+            <!-- Episodes will be inserted here -->
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2023 My Podcast</p>
+    </footer>
+</body>
+
+</html>

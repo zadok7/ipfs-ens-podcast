@@ -1,0 +1,4 @@
+title: The SMH Podcast
+description: The SMH podcast is a demo podcast built on IPFS. We have many great episodes and more coming so be sure to subscribe. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+author: zadok7.eth
+
