@@ -67,12 +67,10 @@ Here's a breakdown of what each variable does and how to update them:
 Update these variables with your specific content information to ensure your podcast can be found and accessed correctly.
 
 ```markdown
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="ipfsGateway" content="https://ipfs.io">
-<meta name="directoryHash" content="QmXrBdvJ9Rbd4jUkL1XpMHvuiTfEGXjwNNSTaNzgpjfvds">
-<meta name="feedHash" content="QmaR1NKFxqP3kN9SSKdbVj3p8revjh3qDAQLw9dvfGwqdA">
-<meta name="ensName" content="podcast.showmehow.eth">
-<meta name="feedName" content="feed.podcast.showmehow.eth">
-<meta name="ensName" content="podcast.showmehow.eth">
-<meta name="feedName" content="feed.podcast.showmehow.eth">
+    <meta name="ipfsGateway" content="https://ipfs.io"> <!-- Sets the IPFS gateway URL. If 'ensName' is not provided, this will be used -->
+    <meta name="directoryHash" content="QmXrBdvJ9Rbd4jUkL1XpMHvuiTfEGXjwNNSTaNzgpjfvds"> <!-- Sets the IPFS directory hash. ie. IPFS CID hash of /podcast_content. If 'ensName' is not provided, this will be used to locate the content -->
+    <meta name="feedHash" content="QmaR1NKFxqP3kN9SSKdbVj3p8revjh3qDAQLw9dvfGwqdA"> <!-- Sets the IPFS feed hash. If 'feedName' is not provided, this will be used to retrieve the feed -->
+    <meta name="ensName" content="podcast.showmehow.eth"> <!-- If set, this ENS name will be used instead of 'ipfsGateway' and 'directoryHash' to retrieve the content -->
+    <meta name="feedName" content="feed.podcast.showmehow.eth"> <!-- If set, this ENS name will be used instead of 'ipfsGateway' and 'feedHash' to retrieve the feed -->
+
 
