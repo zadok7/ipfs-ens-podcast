@@ -16,6 +16,8 @@ Podcast Web Player - [podcast.showmehow.eth](https://podcast.showmehow.eth.limo)
 
 Podcast Subscription RSS Feed (you can add this to Apple Podcast to subscribe) - [feed.podcast.showmehow.eth](https://feed.podcast.showmehow.eth.limo)
 
+Podcast RSS Feed Generator (works with ENS names or public IPFS gateways - [podcast.showmehow.eth/generator](https://podcast.showmehow.eth.limo/generator)
+
 For other experiments and blog posts about ENS and the blockchain see: [showmehow.eth](https://showmehow.eth.limo)
 
 ## Directory Structure
