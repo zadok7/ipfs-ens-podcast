@@ -8,7 +8,7 @@ The guide assumes you are using a directory structure for organizing your podcas
 
 (Note: If your ENS name has a `contenthash` pointed to an IPNS location(or IPFS), you do not need to change the meta tags each time you update your content. If the ENS name points to an IPFS location, ie. the hash of `/podcast_content`, you would need to update the ENS name's records each time there are changes to the podcast which would cost gas.)
 
-For a Primary on creating decentralized websites with IPFS and ENS names, see [ENS Support Docs: Create a Decentralized Website](https://support.ens.domains/articles/7890637-create-a-decentralized-website)
+For a primer on creating decentralized websites with IPFS and ENS names, see [ENS Support Docs: Create a Decentralized Website](https://support.ens.domains/articles/7890637-create-a-decentralized-website)
 
 ## Demo of Decentralized Podcast Built on IPFS with an ENS name.
 
