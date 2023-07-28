@@ -6,7 +6,7 @@ To follow this guide, you will need an ENS name to point to your IPFS content. I
 
 The guide assumes you are using a directory structure for organizing your podcast files. The podcast player reads the metadata from the podcast files stored in the IPFS network, and uses this data to populate the player with episodes. The podcast files and directories follow a specific naming and structural convention to enable the player to automatically update the podcast content just by adding new files to IPFS.
 
-(Note: If your ENS name points to an IPNS location, you do not need to change the meta tags each time you update your content. However, if you are not using an ENS name with the [limo resolver](https://eth.limo), you will need to update the `directoryHash` each time you add new content to the `podcast_content` folder as the IPFS hash of this directory will change.)
+(Note: If your ENS name has a `contenthash` pointed to an IPNS location, you do not need to change the meta tags each time you update your content. The ENS name can also point to an IPFS location, ie. the hash of `/podcast_content`, but you would need to update the ENS name's records each time there are changes to the podcast which would cost gas.)
 
 ## Directory Structure
 
