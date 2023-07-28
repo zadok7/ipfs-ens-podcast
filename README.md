@@ -1,12 +1,14 @@
 # ipfs-ens-podcast
 
-This is a guide for setting up a podcast on IPFS with an ENS name. IPFS (InterPlanetary File System) is a distributed system for storing and accessing files, websites, applications, and data. ENS (Ethereum Name Service) is a decentralized domain name system built on the Ethereum blockchain. Together, they provide a resilient and decentralized infrastructure for hosting a podcast. 
+This is a guide for setting up a podcast on IPFS with an ENS name, or without one just using public IPFS gateways. IPFS (InterPlanetary File System) is a distributed system for storing and accessing files, websites, applications, and data. ENS (Ethereum Name Service) is a decentralized naming system built on the Ethereum blockchain. Together, they provide a resilient and decentralized infrastructure for hosting a podcast. 
 
-To follow this guide, you will need an ENS name to point to your IPFS content. If you haven't already registered one, you can do so at [app.ens.domains](https://app.ens.domains).
+To follow this guide, it's best to have ENS name to point to your IPFS content. If you haven't already registered one, you can do so at [app.ens.domains](https://app.ens.domains).
 
 The guide assumes you are using a directory structure for organizing your podcast files. The podcast player reads the metadata from the podcast files stored in the IPFS network, and uses this data to populate the player with episodes. The podcast files and directories follow a specific naming and structural convention to enable the player to automatically update the podcast content just by adding new files to IPFS.
 
-(Note: If your ENS name has a `contenthash` pointed to an IPNS location, you do not need to change the meta tags each time you update your content. The ENS name can also point to an IPFS location, ie. the hash of `/podcast_content`, but you would need to update the ENS name's records each time there are changes to the podcast which would cost gas.)
+(Note: If your ENS name has a `contenthash` pointed to an IPNS location(or IPFS), you do not need to change the meta tags each time you update your content. If the ENS name points to an IPFS location, ie. the hash of `/podcast_content`, you would need to update the ENS name's records each time there are changes to the podcast which would cost gas.)
+
+For a Primary on creating decentralized websites with IPFS and ENS names, see [Create a Decentralized Website](https://support.ens.domains/articles/7890637-create-a-decentralized-website)
 
 ## Directory Structure
 
