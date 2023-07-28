@@ -25,18 +25,18 @@ For other experiments and blog posts about ENS and the blockchain see: [showmeho
 - **/mypodcast** - The root directory of the podcast.
   - **index.html** - The main HTML file that renders your podcast audio player webpage.
   - **style.css** - The Cascading Style Sheet (CSS) file that contains style information for your podcast audio player webpage.
-  - **/generator** - Contains tools or scripts that generate or manage podcast content.
-    - **index.html** - A utility page for handling the podcast content generation.
+  - **/generator** - Contains a tools for generating the RSS feed.
+    - **index.html** - The script to generate and download the podcast.rss subscription file.
   - **/podcast_content** - Contains all the data related to your podcast episodes. The IPFS hash of this directory is used in the `directoryHash` meta tag of index.html.
-    - **podcast.png** - The main image file for your podcast, used as a logo or banner.
-    - **podcast.txt** - A general description or information file about your podcast.
+    - **podcast.png** - The main image file for your podcast.
+    - **podcast.txt** - The information file about your podcast.
     - **/episode_descriptions** - Contains text files that provide descriptions or summaries for individual podcast episodes.
       - **episode1.txt, episode2.txt, episode3.txt** - Description files for respective podcast episodes.
-    - **/episode_images** - Contains images related to individual podcast episodes.
+    - **/episode_images** - Contains images for each podcast episode.
       - **episode1.png, episode2.png, episode3.png** - Image files related to respective podcast episodes.
     - **/episodes** - Contains the audio files of the podcast episodes.
       - **episode1.mp3, episode2.mp3, episode3.mp3** - The actual audio files of your podcast episodes.
-- **/podcast.rss** - This can be outside of the /mypodcast folder. The file can be generated with /mypodcast/generator/index.html.
+- **/podcast.rss** - This can be outside of the `/mypodcast` folder. The file can be generated with `/mypodcast/generator/index.html`.
 
 ## Adding a New Episode
 
