@@ -176,7 +176,7 @@ When using your own IPFS public gateway, all generated links will point to your 
     </channel>
 </rss>
 ```
-You can now subscribe to the decntralized podcast using apps like Apple Podcast.
+You can now subscribe to the decentralized podcast using apps like Apple Podcast.
 
 ## Further Development
 
